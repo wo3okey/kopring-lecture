@@ -1,4 +1,6 @@
-package org.sparta.kopring.movie
+package org.sparta.kopring.movie.dto
+
+import org.sparta.kopring.movie.entity.Movie
 
 data class MovieRequest(
     val name: String,

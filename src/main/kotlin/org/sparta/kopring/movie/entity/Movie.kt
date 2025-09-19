@@ -1,4 +1,4 @@
-package org.sparta.kopring.movie
+package org.sparta.kopring.movie.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

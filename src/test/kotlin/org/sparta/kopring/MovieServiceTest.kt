@@ -13,10 +13,10 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
-import org.sparta.kopring.movie.Movie
-import org.sparta.kopring.movie.MovieRepository
-import org.sparta.kopring.movie.MovieRequest
-import org.sparta.kopring.movie.MovieService
+import org.sparta.kopring.movie.dto.MovieRequest
+import org.sparta.kopring.movie.entity.Movie
+import org.sparta.kopring.movie.repository.MovieRepository
+import org.sparta.kopring.movie.service.MovieService
 import java.util.Optional
 
 @ExtendWith(MockitoExtension::class)

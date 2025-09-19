@@ -1,4 +1,4 @@
-package org.sparta.kopring.movie
+package org.sparta.kopring.movie.service
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -8,6 +8,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
+import org.sparta.kopring.movie.dto.MovieRequest
+import org.sparta.kopring.movie.dto.MovieResponse
+import org.sparta.kopring.movie.repository.MovieRepository
+import org.sparta.kopring.movie.repository.findByIdOrElseThrow
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +23,7 @@ class MovieService(
 
     fun getMovie(movieId: Long): MovieResponse {
         val movie = movieRepository.findByIdOrElseThrow(movieId)
-        return MovieResponse.of(movie)
+        return MovieResponse.Companion.of(movie)
     }
 
     @Transactional
@@ -28,9 +32,9 @@ class MovieService(
     }
 
     @Transactional
-    suspend fun saveMovieBulkAsync(movieRequest: MovieRequest) {
+    suspend fun saveMovieAsync(movieRequest: MovieRequest) {
         val list = (1..100).map { movieRequest.copy(name = movieRequest.name + it) }
-        log.info("시작")
+        log.info("[start] coroutine blocking")
         runBlocking(Dispatchers.IO) {
             val defer =
                 list.map {
@@ -43,9 +47,9 @@ class MovieService(
             defer.awaitAll()
         }
 
-        log.info("끝")
+        log.info("[end] coroutine blocking")
 
-        log.info("시작2")
+        log.info("[start] coroutine launch")
         CoroutineScope(Dispatchers.IO).launch {
             list.map {
                 async {
@@ -54,7 +58,6 @@ class MovieService(
                 }
             }
         }
-
-        log.info("끝2")
+        log.info("[end] coroutine launch")
     }
 }

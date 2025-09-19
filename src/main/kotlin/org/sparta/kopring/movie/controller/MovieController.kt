@@ -1,6 +1,9 @@
-package org.sparta.kopring.movie
+package org.sparta.kopring.movie.controller
 
 import org.sparta.kopring.common.dto.Response
+import org.sparta.kopring.movie.dto.MovieRequest
+import org.sparta.kopring.movie.dto.MovieResponse
+import org.sparta.kopring.movie.service.MovieService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,7 +17,7 @@ class MovieController(
     @GetMapping("/api/v1/movies/{movieId}")
     fun getMovie(
         @PathVariable movieId: Long,
-    ): Response<MovieResponse> = Response.of(movieService.getMovie(movieId))
+    ): Response<MovieResponse> = Response.Companion.of(movieService.getMovie(movieId))
 
     @PostMapping("/api/v1/movies")
     fun saveMovie(
@@ -27,6 +30,6 @@ class MovieController(
     suspend fun saveMovieBulkAsync(
         @RequestBody movieRequest: MovieRequest,
     ) {
-        movieService.saveMovieBulkAsync(movieRequest)
+        movieService.saveMovieAsync(movieRequest)
     }
 }
