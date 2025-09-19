@@ -9,6 +9,7 @@ plugins {
 
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.jmailen.kotlinter") version "5.0.1"
 }
 
 group = "org.sparta"
@@ -31,6 +32,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
     runtimeOnly("com.mysql:mysql-connector-j")
 

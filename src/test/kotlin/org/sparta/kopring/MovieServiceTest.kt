@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.any
 import org.mockito.BDDMockito.anyLong
-import org.mockito.BDDMockito.doNothing
 import org.mockito.BDDMockito.given
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -18,7 +17,7 @@ import org.sparta.kopring.movie.Movie
 import org.sparta.kopring.movie.MovieRepository
 import org.sparta.kopring.movie.MovieRequest
 import org.sparta.kopring.movie.MovieService
-import java.util.*
+import java.util.Optional
 
 @ExtendWith(MockitoExtension::class)
 class MovieServiceTest {
@@ -57,7 +56,7 @@ class MovieServiceTest {
     inner class PostMovieTest {
         @Test
         fun `영화 등록 - 정상 등록`() {
-            val movieRequest = MovieRequest("test", true, 2025)
+            val movieRequest = MovieRequest("test", 2025)
 
             given(movieRepository.save(any())).willReturn(Movie(name = "test", productionYear = 2025))
 

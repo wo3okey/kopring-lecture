@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MovieService(
-    val movieRepository: MovieRepository
+    val movieRepository: MovieRepository,
 ) {
     private val log = LoggerFactory.getLogger(MovieService::class.java)
 
@@ -24,9 +24,6 @@ class MovieService(
 
     @Transactional
     fun saveMovie(movieRequest: MovieRequest) {
-        if (movieRequest.writeYearYn) {
-            checkNotNull(movieRequest.productionYear) { "write movie product year." }
-        }
         movieRepository.save(movieRequest.toEntity())
     }
 
@@ -35,12 +32,13 @@ class MovieService(
         val list = (1..100).map { movieRequest.copy(name = movieRequest.name + it) }
         log.info("시작")
         runBlocking(Dispatchers.IO) {
-            val defer = list.map {
-                async {
-                    saveMovie(it)
-                    log.info(Thread.currentThread().name)
+            val defer =
+                list.map {
+                    async {
+                        saveMovie(it)
+                        log.info(Thread.currentThread().name)
+                    }
                 }
-            }
             delay(1000)
             defer.awaitAll()
         }
