@@ -38,3 +38,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Datadog ###
+dd-java-agent.jar
+.env
